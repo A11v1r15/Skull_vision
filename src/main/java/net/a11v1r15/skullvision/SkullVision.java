@@ -17,6 +17,6 @@ public class SkullVision implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("The eyes are the window of the soul");
 	}
 }
