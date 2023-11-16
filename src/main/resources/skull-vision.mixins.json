@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "com.example.mixin",
+	"package": "net.a11v1r15.skullvision.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"ExampleMixin"

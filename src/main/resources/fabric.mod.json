@@ -1,41 +1,39 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "skull-vision",
+	"name": "Skull Vision",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
-	"environment": "*",
+	"environment": "client",
+	"license": "MIT",
+	"icon": "assets/skull-vision/icon.png",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"net.a11v1r15.skullvision.SkullVision"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"net.a11v1r15.skullvision.SkullVisionClient"
 		]
 	},
-	"mixins": [
-		"modid.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
-	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/skull-vision",
+		"sources": "https://github.com/A11v1r15/Skull_vision",
+		"issues": "https://github.com/A11v1r15/Skull_vision/issues"
+	},
 	"depends": {
-		"fabricloader": ">=0.14.22",
-		"minecraft": "~1.20.2",
+		"fabricloader": ">=0.14.24",
+		"minecraft": "~1.20",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
-	"suggests": {
-		"another-mod": "*"
-	}
+	"authors": [
+		"A11v1r15"
+	],
+	"description": "A simple client-side mod that allows you to see like a mob when wearing it's skull",
+	"mixins": [
+		"skull-vision.mixins.json",
+		{
+			"config": "skull-vision.client.mixins.json",
+			"environment": "client"
+		}
+	]
 }
