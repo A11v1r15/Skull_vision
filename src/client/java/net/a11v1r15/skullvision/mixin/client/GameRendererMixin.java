@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
@@ -21,6 +22,12 @@ import net.minecraft.util.Identifier;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin implements AutoCloseable {
+ 
+public void close(){}
+
+ @Shadow
+protected abstract void loadPostProcessor(Identifier);
+
 	@Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
 	private void skullVision$testEntityWearingSkull(CallbackInfo info, Entity entity) {
 		if (entity instanceof LivingEntity){
@@ -33,7 +40,7 @@ public class GameRendererMixin implements AutoCloseable {
 						String soundName = ((SkullBlockEntity)headBlock).getNoteBlockSound().getPath();
 						String mobName = "";
 						for (String element : soundName.split(".")) {
-							if(EntityType.get(element) != Optional.empty()){
+							if(!EntityType.get(element).isEmpty()){
 								mobName = element;
 								break;
 							}
