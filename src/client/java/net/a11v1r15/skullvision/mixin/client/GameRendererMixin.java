@@ -25,9 +25,6 @@ public class GameRendererMixin implements AutoCloseable {
  
 public void close(){}
 
- @Shadow
-protected abstract void loadPostProcessor(Identifier);
-
 	@Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
 	private void skullVision$testEntityWearingSkull(CallbackInfo info, Entity entity) {
 		if (entity instanceof LivingEntity){
@@ -45,7 +42,7 @@ protected abstract void loadPostProcessor(Identifier);
 								break;
 							}
 						}
-						this.loadPostProcessor(new Identifier("shaders/post/" + mobName + ".json"));
+						((GameRenderer)(Object)this).loadPostProcessor(new Identifier("shaders/post/" + mobName + ".json"));
 					}
 				}
 			}
