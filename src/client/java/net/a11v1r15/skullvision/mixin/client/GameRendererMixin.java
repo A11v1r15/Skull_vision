@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.enums.Instrument;
+import net.a11v1r15.skullvision.SkullVision;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.EquipmentSlot;
@@ -18,12 +19,16 @@ import net.minecraft.item.SkullItem;
 import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin implements AutoCloseable {
 
- @Shadow
+@Shadow
+ protected ResourceManager resourceManager;
+
+@Shadow
  protected abstract void loadPostProcessor(Identifier identifier);
 
 	@Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
@@ -48,14 +53,11 @@ public abstract class GameRendererMixin implements AutoCloseable {
 							break;
 						}
 					}
-					this.loadPostProcessor(new Identifier("shaders/post/" + mobName + ".json"));
+					Identifier shaderid = new Identifier("shaders/post/" + mobName + ".json");
+					this.resourceManager.getResource(shaderid).ifPresentOrElse(r->this.loadPostProcessor(shaderid),
+					() -> {SkullVision.LOGGER.warn("No post shader found in " + shaderid);});
 				}
 			}
 		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		throw new UnsupportedOperationException("Unimplemented method 'close'");
 	}
 }
