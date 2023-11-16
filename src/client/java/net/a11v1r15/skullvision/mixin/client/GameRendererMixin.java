@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin implements AutoCloseable {
-	@Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity)V")
+	@Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
 	private void skullVision$testEntityWearingSkull(CallbackInfo info, Entity entity) {
 		if (entity instanceof LivingEntity){
 			ItemStack head = (LivingEntity)entity.getEquippedStack(EquipmentSlot.HEAD);
