@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.SkullItem;
+import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
@@ -31,8 +32,8 @@ public abstract class GameRendererMixin implements AutoCloseable {
 			ItemStack head = ((LivingEntity)entity).getEquippedStack(EquipmentSlot.HEAD);
 			if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)){
 				Item headItem = head.getItem();
-				if (headItem instanceof SkullItem){
-					Block headBlock = ((SkullItem)headItem).getBlock();
+				if (headItem instanceof VerticallyAttachableBlockItem){
+					Block headBlock = ((VerticallyAttachableBlockItem)headItem).getBlock();
 					Instrument headInstrument =	headBlock.getDefaultState().getInstrument();
 					String soundName = "";
 					if (headInstrument.hasCustomSound()){
@@ -41,7 +42,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
 						soundName = headInstrument.getSound().value().getId().getPath();
 					}
 					String mobName = "";
-					for (String element : soundName.split(".")) {
+					for (String element : soundName.split("\\.")) {
 						if(!EntityType.get(element).isEmpty()){
 							mobName = element;
 							break;
