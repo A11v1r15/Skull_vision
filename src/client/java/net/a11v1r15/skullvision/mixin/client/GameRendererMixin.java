@@ -9,9 +9,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tag.ItemTags;
+import net.minecraft.block.Block;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin implements AutoCloseable {
