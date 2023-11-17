@@ -1,18 +1,18 @@
 # Overview:
 
-Do you remember Super Secret Settings? Do you know that if you spectate certain mobs you'll se like they see? So what if you can do it in Survival using their heads?
+Do you remember Super Secret Settings? Do you know that if you spectate certain mobs you'll see like they see? So what if you can do it in Survival while wearing their heads? Put this mod on to see things in a whole different way!
 
 # Vanilla mobs with custom vision:
 
-* Creeper: They see green and pixelated.
-* Spider and Cave Spider: They see 5 times!
-* Enderman: They see with inverted colours.
+* Creepers: They see green and pixelated.
+* Spiders and Cave Spiders: They see multiple times!
+* Endermen: They see with inverted colours.
 
 # Considerations:
 
 * This mod is Client-side only. It'll work in single player and with any server, vanilla or modded.
-* Only compatible fully Vanilla gameplay mob is Creeper, but it its compatible with Vanilla Tweaks skulls.
-* Maybe compatible with mobs of other mods, tell me about any other mod that add mob with custom post-processor views so I can look into compatibility with it.
+* Only compatible _vanilla gameplay_ mob is Creeper, but the mod is compatible with the [Vanilla Tweaks](https://vanillatweaks.net/picker/datapacks/) skulls.
+* Maybe it is compatible with mobs of other mods, tell me about any other mod that add mob with custom post-processor shaders so I can look into compatibility with it.
 
 # Legal:
 
