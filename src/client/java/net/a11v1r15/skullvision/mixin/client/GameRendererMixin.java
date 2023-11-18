@@ -25,39 +25,42 @@ import net.minecraft.util.Identifier;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin implements AutoCloseable {
 
-@Shadow
- protected ResourceManager resourceManager;
+  @Shadow
+  protected ResourceManager resourceManager;
 
-@Shadow
- protected abstract void loadPostProcessor(Identifier identifier);
+  @Shadow
+  protected abstract void loadPostProcessor(Identifier identifier);
 
-	@Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
-	private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
-		if (entity instanceof LivingEntity){
-			ItemStack head = ((LivingEntity)entity).getEquippedStack(EquipmentSlot.HEAD);
-			if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)){
-				Item headItem = head.getItem();
-				if (headItem instanceof VerticallyAttachableBlockItem){
-					Block headBlock = ((VerticallyAttachableBlockItem)headItem).getBlock();
-					Instrument headInstrument =	headBlock.getDefaultState().getInstrument();
-					String soundName = "";
-					if (headInstrument.hasCustomSound()){
-						soundName = SkullItem.getBlockEntityNbt(head).getString("note_block_sound");
-					} else {
-						soundName = headInstrument.getSound().value().getId().getPath();
-					}
-					String mobName = "";
-					for (String element : soundName.split("\\.")) {
-						if(!EntityType.get(element).isEmpty()){
-							mobName = element;
-							break;
-						}
-					}
-					Identifier shaderid = new Identifier("shaders/post/" + mobName + ".json");
-					this.resourceManager.getResource(shaderid).ifPresentOrElse(r->this.loadPostProcessor(shaderid),
-					() -> {SkullVision.LOGGER.warn("No post shader found in " + shaderid);});
-				}
-			}
-		}
-	}
+  @Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
+  private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
+//  SkullVision.LOGGER.info("Function called");
+    if (entity instanceof LivingEntity) {
+      ItemStack head = ((LivingEntity) entity).getEquippedStack(EquipmentSlot.HEAD);
+      if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)) {
+        Item headItem = head.getItem();
+        SkullVision.LOGGER.info(headItem.getClass().getName());
+        if (headItem instanceof VerticallyAttachableBlockItem) {
+          Block headBlock = ((VerticallyAttachableBlockItem) headItem).getBlock();
+          Instrument headInstrument = headBlock.getDefaultState().getInstrument();
+          String soundName = "";
+          if (headInstrument.hasCustomSound()) {
+            soundName = SkullItem.getBlockEntityNbt(head).getString("note_block_sound");
+          } else {
+            soundName = headInstrument.getSound().value().getId().getPath();
+          }
+          String mobName = "";
+          for (String element: soundName.split("\\.")) {
+            if (!EntityType.get(element).isEmpty()) {
+              mobName = element;
+              break;
+            }
+          }
+//        SkullVision.LOGGER.info("soundName is \"" + soundName + "\" and mobName is \"" + mobName + "\"");
+          Identifier shaderid = new Identifier("shaders/post/" + mobName + ".json");
+          this.resourceManager.getResource(shaderid).ifPresentOrElse(r -> this.loadPostProcessor(shaderid),
+            () -> { SkullVision.LOGGER.warn("No post shader found in " + shaderid); } );
+        }
+      }
+    }
+  }
 }
