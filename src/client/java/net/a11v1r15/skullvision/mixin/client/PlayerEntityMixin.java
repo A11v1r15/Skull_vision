@@ -29,8 +29,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
   @Inject(at = @At(value = "RETURN"), method =
     "equipStack(Lnet/minecraft/entity/EquipmentSlot;Lnet/minecraft/item/ItemStack;)V")
   private void skullVision$checkEquippingSkull(EquipmentSlot slot, ItemStack stack, CallbackInfo info) {
-    SkullVision.LOGGER.info("Function equipStack called, slot is " + slot.getName().getItem());
-    SkullVision.LOGGER.info("stack is " + stack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD));
+    SkullVision.LOGGER.info("Function equipStack called, slot is " + slot.getName());
+    SkullVision.LOGGER.info("stack is " + stack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
     if (slot == EquipmentSlot.HEAD) {
       Perspective perspective = MinecraftClient.getInstance().options.getPerspective();
       if (perspective.isFirstPerson()) {
