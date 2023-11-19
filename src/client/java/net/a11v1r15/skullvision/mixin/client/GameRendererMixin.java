@@ -39,7 +39,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
   protected abstract void onCameraEntitySet(Entity entity);
 
   @Inject(at = @At("RETURN"), method = "<init>")
-  private void skullVision$testStartWearingSkull(Entity entity, CallbackInfo info) {
+  private void skullVision$testStartWearingSkull(CallbackInfo info) {
     if (this.client.getCameraEntity() instanceof LivingEntity){
       this.onCameraEntitySet(((LivingEntity)this.client.getCameraEntity()));
     }
