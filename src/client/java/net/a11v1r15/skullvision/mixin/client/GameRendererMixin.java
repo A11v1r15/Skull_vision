@@ -30,20 +30,8 @@ public abstract class GameRendererMixin implements AutoCloseable {
   protected ResourceManager resourceManager;
 
   @Shadow
-  protected MinecraftClient client;
-
-  @Shadow
   protected abstract void loadPostProcessor(Identifier identifier);
 
-  @Shadow
-  protected abstract void onCameraEntitySet(Entity entity);
-
-  @Inject(at = @At("RETURN"), method = "<init>")
-  private void skullVision$testStartWearingSkull(CallbackInfo info) {
-    if (this.client.getCameraEntity() instanceof LivingEntity){
-      this.onCameraEntitySet(((LivingEntity)this.client.getCameraEntity()));
-    }
-  }
 
   @Inject(at = @At("RETURN"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
   private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
@@ -52,7 +40,6 @@ public abstract class GameRendererMixin implements AutoCloseable {
       ItemStack head = ((LivingEntity) entity).getEquippedStack(EquipmentSlot.HEAD);
       if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)) {
         Item headItem = head.getItem();
-        SkullVision.LOGGER.info(headItem.getClass().getName());
         if (headItem instanceof VerticallyAttachableBlockItem) {
           Block headBlock = ((VerticallyAttachableBlockItem) headItem).getBlock();
           Instrument headInstrument = headBlock.getDefaultState().getInstrument();

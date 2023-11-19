@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.a11v1r15.skullvision.SkullVision;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.entity.Entity;
@@ -28,11 +29,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
   @Inject(at = @At(value = "RETURN"), method =
     "equipStack(Lnet/minecraft/entity/EquipmentSlot;Lnet/minecraft/item/ItemStack;)V")
   private void skullVision$checkEquippingSkull(EquipmentSlot slot, ItemStack stack, CallbackInfo info) {
+    SkullVision.LOGGER.info("Function equipStack called, " + (this.isMainPlayer() ? "is main Player" : " Not main player") + " and slot is " + slot.getName());
+    SkullVision.LOGGER.info("stack is " + stack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD));
     if (this.isMainPlayer() && slot == EquipmentSlot.HEAD) {
-    Perspective perspective = MinecraftClient.getInstance().options.getPerspective();
-    if (perspective.isFirstPerson()) {
-        MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);
-      }
+      Perspective perspective = MinecraftClient.getInstance().options.getPerspective();
+      if (perspective.isFirstPerson()) {
+          MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);
+        }
     }
   }
 }
