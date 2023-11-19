@@ -33,9 +33,10 @@ extends Entity {
     SkullVision.LOGGER.info("Function onEquipStack called");
     SkullVision.LOGGER.info(((Entity)(Object)this).toString());
     SkullVision.LOGGER.info(client.getCameraEntity().toString());
-    SkullVision.LOGGER.info(((this == client.getCameraEntity()) ? "is Player" : " Not player"));
-    SkullVision.LOGGER.info(((client.options.getPerspective().isFirstPerson()) ? "is 1st" : " Not first"));
-    SkullVision.LOGGER.info("slot is " + slot.getName() + "oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
+    SkullVision.LOGGER.info(((this == client.getCameraEntity()) ? "is Player" : "Not player"));
+    SkullVision.LOGGER.info(((client.options.getPerspective().isFirstPerson()) ? "is 1st" : "Not first"));
+    SkullVision.LOGGER.info("slot is " + slot.getName() + ", oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem());
+    SkullVision.LOGGER.info("Current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
     if (slot == EquipmentSlot.HEAD) {
       if (this == client.getCameraEntity() && client.options.getPerspective().isFirstPerson()) {
         MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);

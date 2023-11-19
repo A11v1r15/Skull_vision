@@ -30,7 +30,13 @@ public abstract class GameRendererMixin implements AutoCloseable {
   protected ResourceManager resourceManager;
 
   @Shadow
+  protected MinecraftClient client;
+
+  @Shadow
   protected abstract void loadPostProcessor(Identifier identifier);
+
+  @Shadow
+  protected abstract void onCameraEntitySet(Entity entity);
 
 
   @Inject(at = @At("RETURN"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
@@ -63,5 +69,10 @@ public abstract class GameRendererMixin implements AutoCloseable {
         }
       }
     }
+  }
+
+  @Inject(at = @At(value = "RETURN"), method = "tick()V")
+  private void skullVision$tickEquippingSkull(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack, CallbackInfo info) {
+    this.onCameraEntitySet(this.client.getCameraEntity());
   }
 }

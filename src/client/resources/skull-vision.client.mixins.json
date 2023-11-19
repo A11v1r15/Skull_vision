@@ -3,8 +3,7 @@
 	"package": "net.a11v1r15.skullvision.mixin.client",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"GameRendererMixin",
-		"LivingEntityMixin"
+		"GameRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
