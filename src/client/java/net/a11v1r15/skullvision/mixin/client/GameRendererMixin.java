@@ -10,6 +10,7 @@ import net.minecraft.block.enums.Instrument;
 import net.a11v1r15.skullvision.SkullVision;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -29,11 +30,24 @@ public abstract class GameRendererMixin implements AutoCloseable {
   protected ResourceManager resourceManager;
 
   @Shadow
+  protected MinecraftClient client;
+
+  @Shadow
   protected abstract void loadPostProcessor(Identifier identifier);
 
-  @Inject(at = @At("TAIL"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
+  @Shadow
+  protected abstract void onCameraEntitySet(Entity entity);
+
+  @Inject(at = @At("RETURN"), method = "<init>")
+  private void skullVision$testStartWearingSkull(Entity entity, CallbackInfo info) {
+    if (this.client.getCameraEntity() instanceof LivingEntity){
+      this.onCameraEntitySet(((LivingEntity)this.client.getCameraEntity()));
+    }
+  }
+
+  @Inject(at = @At("RETURN"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
   private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
-//  SkullVision.LOGGER.info("Function called");
+    SkullVision.LOGGER.info("Function onCameraEntitySet called");
     if (entity instanceof LivingEntity) {
       ItemStack head = ((LivingEntity) entity).getEquippedStack(EquipmentSlot.HEAD);
       if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)) {
