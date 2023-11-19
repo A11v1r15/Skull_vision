@@ -31,8 +31,8 @@ extends Entity {
   private void skullVision$checkEquippingSkull(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack, CallbackInfo info) {
     MinecraftClient client = MinecraftClient.getInstance();
     SkullVision.LOGGER.info("Function onEquipStack called");
-    SkullVision.LOGGER.info(this);
-    SkullVision.LOGGER.info(client.getCameraEntity());
+    SkullVision.LOGGER.info(((Entity)(Object)this).toString());
+    SkullVision.LOGGER.info(client.getCameraEntity().toString());
     SkullVision.LOGGER.info(((this == client.getCameraEntity()) ? "is Player" : " Not player"));
     SkullVision.LOGGER.info(((client.options.getPerspective().isFirstPerson()) ? "is 1st" : " Not first"));
     SkullVision.LOGGER.info("slot is " + slot.getName() + "oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
