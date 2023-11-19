@@ -29,6 +29,7 @@ extends Entity {
   @Inject(at = @At(value = "RETURN"), method =
     "onEquipStack(Lnet/minecraft/entity/EquipmentSlot;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V")
   private void skullVision$checkEquippingSkull(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack, CallbackInfo info) {
+    MinecraftClient client = MinecraftClient.getInstance();
     SkullVision.LOGGER.info("Function onEquipStack called");
     SkullVision.LOGGER.info(this);
     SkullVision.LOGGER.info(client.getCameraEntity());
@@ -36,7 +37,6 @@ extends Entity {
     SkullVision.LOGGER.info(((client.options.getPerspective().isFirstPerson()) ? "is 1st" : " Not first"));
     SkullVision.LOGGER.info("slot is " + slot.getName() + "oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
     if (slot == EquipmentSlot.HEAD) {
-      MinecraftClient client = MinecraftClient.getInstance();
       if (this == client.getCameraEntity() && client.options.getPerspective().isFirstPerson()) {
         MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);
       }
