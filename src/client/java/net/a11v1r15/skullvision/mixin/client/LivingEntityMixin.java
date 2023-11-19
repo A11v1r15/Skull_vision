@@ -33,7 +33,7 @@ extends Entity {
     SkullVision.LOGGER.info("oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
     if ((Object) this instanceof PlayerEntity) {
       if (slot == EquipmentSlot.HEAD) {
-        MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);
+        MinecraftClient.getInstance().setCameraEntity(this);
       }
     }
   }

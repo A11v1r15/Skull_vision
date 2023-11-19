@@ -34,7 +34,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     if (slot == EquipmentSlot.HEAD) {
       Perspective perspective = MinecraftClient.getInstance().options.getPerspective();
       if (perspective.isFirstPerson()) {
-          MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);
+          MinecraftClient.getInstance().setCameraEntity(this);
         }
     }
   }
