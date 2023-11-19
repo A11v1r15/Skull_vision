@@ -29,9 +29,9 @@ extends Entity {
   @Inject(at = @At(value = "RETURN"), method =
     "onEquipStack(Lnet/minecraft/entity/EquipmentSlot;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V")
   private void skullVision$checkEquippingSkull(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack, CallbackInfo info) {
-    SkullVision.LOGGER.info("Function equipStack called, " + ((Object) this instanceof PlayerEntity && ((PlayerEntity)(Object) this).isMainPlayer() ? "is main Player" : " Not main player") + " and slot is " + slot.getName());
-    SkullVision.LOGGER.info("oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD));
-    if ((Object) this instanceof PlayerEntity && ((PlayerEntity)(Object) this).isMainPlayer()) {
+    SkullVision.LOGGER.info("Function onEquipStack called, " + ((Object) this instanceof PlayerEntity ? "is Player" : " Not player") + " and slot is " + slot.getName());
+    SkullVision.LOGGER.info("oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
+    if ((Object) this instanceof PlayerEntity) {
       if (slot == EquipmentSlot.HEAD) {
         MinecraftClient.getInstance().gameRenderer.onCameraEntitySet(this);
       }

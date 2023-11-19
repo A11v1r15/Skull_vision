@@ -56,7 +56,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
               break;
             }
           }
-//        SkullVision.LOGGER.info("soundName is \"" + soundName + "\" and mobName is \"" + mobName + "\"");
+          SkullVision.LOGGER.info("soundName is \"" + soundName + "\" and mobName is \"" + mobName + "\"");
           Identifier shaderid = new Identifier("shaders/post/" + mobName + ".json");
           this.resourceManager.getResource(shaderid).ifPresentOrElse(r -> this.loadPostProcessor(shaderid),
             () -> { SkullVision.LOGGER.warn("No post shader found in " + shaderid); } );
