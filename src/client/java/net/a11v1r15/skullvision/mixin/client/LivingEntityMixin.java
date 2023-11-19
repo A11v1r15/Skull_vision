@@ -12,7 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -29,9 +29,9 @@ extends Entity {
   @Inject(at = @At(value = "RETURN"), method =
     "onEquipStack(Lnet/minecraft/entity/EquipmentSlot;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V")
   private void skullVision$checkEquippingSkull(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack, CallbackInfo info) {
-    SkullVision.LOGGER.info("Function onEquipStack called, " + ((Object) this instanceof PlayerEntity ? "is Player" : " Not player") + " and slot is " + slot.getName());
+    SkullVision.LOGGER.info("Function onEquipStack called, " + ((Object) this instanceof ClientPlayerEntity ? "is Player" : " Not player") + " and slot is " + slot.getName());
     SkullVision.LOGGER.info("oldStack is " + oldStack.getItem() + ", newStack is " + newStack.getItem() + " and current thing in head is " + this.getEquippedStack(EquipmentSlot.HEAD).getItem());
-    if ((Object) this instanceof PlayerEntity) {
+    if ((Object) this instanceof ClientPlayerEntity) {
       if (slot == EquipmentSlot.HEAD) {
         MinecraftClient.getInstance().setCameraEntity(this);
       }
