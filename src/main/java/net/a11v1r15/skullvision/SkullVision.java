@@ -12,6 +12,6 @@ public class SkullVision implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		LOGGER.info("The eyes are the window to your soul");
+		LOGGER.info("The eyes are the window to your soul - Shakespeare");
 	}
 }
