@@ -72,7 +72,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
   }
 
   @Inject(at = @At(value = "RETURN"), method = "tick()V")
-  private void skullVision$tickEquippingSkull(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack, CallbackInfo info) {
+  private void skullVision$tickEquippingSkull(CallbackInfo info) {
     this.onCameraEntitySet(this.client.getCameraEntity());
   }
 }
