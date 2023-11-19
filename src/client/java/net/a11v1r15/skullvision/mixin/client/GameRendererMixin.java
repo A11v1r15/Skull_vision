@@ -41,7 +41,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
 
   @Inject(at = @At("RETURN"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
   private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
-    SkullVision.LOGGER.info("Function onCameraEntitySet called");
+    //SkullVision.LOGGER.info("Function onCameraEntitySet called");
     if (entity instanceof LivingEntity) {
       ItemStack head = ((LivingEntity) entity).getEquippedStack(EquipmentSlot.HEAD);
       if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)) {
@@ -62,7 +62,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
               break;
             }
           }
-          SkullVision.LOGGER.info("soundName is \"" + soundName + "\" and mobName is \"" + mobName + "\"");
+          //SkullVision.LOGGER.info("soundName is \"" + soundName + "\" and mobName is \"" + mobName + "\"");
           Identifier shaderid = new Identifier("shaders/post/" + mobName + ".json");
           this.resourceManager.getResource(shaderid).ifPresentOrElse(r -> this.loadPostProcessor(shaderid),
             () -> { SkullVision.LOGGER.warn("No post shader found in " + shaderid); } );
@@ -73,6 +73,6 @@ public abstract class GameRendererMixin implements AutoCloseable {
 
   @Inject(at = @At(value = "RETURN"), method = "tick()V")
   private void skullVision$tickEquippingSkull(CallbackInfo info) {
-    this.onCameraEntitySet(this.client.getCameraEntity());
+    this.onCameraEntitySet(this.client.options.getPerspective().isFirstPerson() ? this.client.getCameraEntity() : null);
   }
 }
