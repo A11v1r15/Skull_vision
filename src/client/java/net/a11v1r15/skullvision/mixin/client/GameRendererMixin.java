@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.a11v1r15.skullvision.SkullVision;
+//import net.a11v1r15.skullvision.SkullVision;
 import net.a11v1r15.skullvision.SkullVisionClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.MinecraftClient;
@@ -34,7 +34,7 @@ public abstract class GameRendererMixin implements AutoCloseable {
   private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
     String entityName = ((entity != null) ? EntityType.getId(entity.getType()).getPath() : "null");
     String skullName = SkullVisionClient.getSkullNameFrom(entity);
-    SkullVision.LOGGER.info("Function onCameraEntitySet called on " + entityName);
+    //SkullVision.LOGGER.info("Function onCameraEntitySet called on " + entityName);
 
     Identifier entityShaderId = new Identifier("shaders/post/" + entityName + ".json");
     Identifier skullShaderId = new Identifier("shaders/post/" + skullName + ".json");
