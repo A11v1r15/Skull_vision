@@ -15,9 +15,10 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SkullItem;
-import net.minecraft.item.VerticallyAttachableBlockItem;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.resource.ResourceManager;
@@ -41,17 +42,23 @@ public abstract class GameRendererMixin implements AutoCloseable {
 
   @Inject(at = @At("RETURN"), method = "onCameraEntitySet(Lnet/minecraft/entity/Entity;)V")
   private void skullVision$testEntityWearingSkull(Entity entity, CallbackInfo info) {
-    //SkullVision.LOGGER.info("Function onCameraEntitySet called");
+    //SkullVision.LOGGER.info("Function onCameraEntitySet called on " + ((entity != null) ? EntityType.getId(entity.getType()).getPath() : "null"));
+    Identifier entityShaderId = new Identifier("shaders/post/" + ((entity != null) ? EntityType.getId(entity.getType()).getPath() : "null") + ".json");
+      this.resourceManager.getResource(entityShaderId).ifPresent
+        (r -> {this.loadPostProcessor(entityShaderId); SkullVisionClient.lastPostProcessor = entityShaderId;});
+
     if (entity instanceof LivingEntity) {
       ItemStack head = ((LivingEntity) entity).getEquippedStack(EquipmentSlot.HEAD);
       if (head.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)) {
         Item headItem = head.getItem();
-        if (headItem instanceof VerticallyAttachableBlockItem) {
-          Block headBlock = ((VerticallyAttachableBlockItem) headItem).getBlock();
+        if (headItem instanceof BlockItem) {
+          Block headBlock = ((BlockItem) headItem).getBlock();
           Instrument headInstrument = headBlock.getDefaultState().getInstrument();
           String soundName = "";
           if (headInstrument.hasCustomSound()) {
-            soundName = SkullItem.getBlockEntityNbt(head).getString("note_block_sound");
+            NbtCompound headNBT = SkullItem.getBlockEntityNbt(head);
+            if (headNBT != null)
+              soundName = headNBT.getString("note_block_sound");
           } else {
             soundName = headInstrument.getSound().value().getId().getPath();
           }
@@ -63,9 +70,11 @@ public abstract class GameRendererMixin implements AutoCloseable {
             }
           }
           //SkullVision.LOGGER.info("soundName is \"" + soundName + "\" and mobName is \"" + mobName + "\"");
-          Identifier shaderid = new Identifier("shaders/post/" + mobName + ".json");
-          this.resourceManager.getResource(shaderid).ifPresentOrElse(r -> this.loadPostProcessor(shaderid),
-            () -> { SkullVision.LOGGER.warn("No post shader found in " + shaderid); } );
+          Identifier headShaderId = new Identifier("shaders/post/" + mobName + ".json");
+            this.resourceManager.getResource(headShaderId).ifPresentOrElse (
+              rr -> {this.loadPostProcessor(headShaderId); SkullVisionClient.lastPostProcessor = headShaderId;},
+              () -> { SkullVision.LOGGER.warn("No post shader found in " + headShaderId); }
+            );
         }
       }
     }
