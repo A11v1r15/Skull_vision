@@ -1,6 +1,9 @@
 package net.a11v1r15.skullvision;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.minecraft.block.Block;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.entity.Entity;
@@ -13,6 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SkullItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class SkullVisionClient implements ClientModInitializer {
   public static String[] lastPostProcessors = {"null", "null"};
@@ -44,8 +50,14 @@ public class SkullVisionClient implements ClientModInitializer {
     return "null";
   }
 
+	public static Identifier asId(String path) {
+		return new Identifier(SkullVision.MOD_ID, path);
+	}
+
   @Override
   public void onInitializeClient() {
-    // This entrypoint is suitable for setting up client-specific logic, such as rendering.
+		FabricLoader.getInstance().getModContainer(SkullVision.MOD_ID).ifPresent(container -> {
+			ResourceManagerHelper.registerBuiltinResourcePack(asId("loop_mobs"), container, Text.of("Loop's Mobs") ,ResourcePackActivationType.NORMAL);
+		});
   }
 }
