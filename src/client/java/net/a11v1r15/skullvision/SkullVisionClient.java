@@ -4,7 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -33,7 +33,7 @@ public class SkullVisionClient implements ClientModInitializer {
             } else if (skull.isIn(ItemTags.NOTEBLOCK_TOP_INSTRUMENTS)) {
                 Item skullItem = skull.getItem();
                 if (skullItem instanceof BlockItem skullBlock){
-                    Instrument skullInstrument = skullBlock.getBlock().getDefaultState().getInstrument();
+                    NoteBlockInstrument skullInstrument = skullBlock.getBlock().getDefaultState().getInstrument();
                     soundName = skullInstrument.getSound().value().getId().getPath();
                 }
             }

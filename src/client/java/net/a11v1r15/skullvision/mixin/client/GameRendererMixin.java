@@ -36,8 +36,8 @@ public abstract class GameRendererMixin implements AutoCloseable {
         String skullName = SkullVisionClient.getSkullNameFrom(entity);
         //SkullVision.LOGGER.info("Function onCameraEntitySet called on " + entityName);
 
-        Identifier entityShaderId = new Identifier("shaders/post/" + entityName + ".json");
-        Identifier skullShaderId = new Identifier("shaders/post/" + skullName + ".json");
+        Identifier entityShaderId = Identifier.of("shaders/post/" + entityName + ".json");
+        Identifier skullShaderId = Identifier.of("shaders/post/" + skullName + ".json");
         String[] postProcessors = {entityName, skullName};
         SkullVisionClient.lastPostProcessors = postProcessors;
         //SkullVision.LOGGER.info(entityName + " " + SkullVisionClient.lastPostProcessors[0] + " / " + skullName + " " + SkullVisionClient.lastPostProcessors[1]);
